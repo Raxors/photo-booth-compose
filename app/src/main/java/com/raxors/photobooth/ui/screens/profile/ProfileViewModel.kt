@@ -22,7 +22,7 @@ class ProfileViewModel @Inject constructor(): ViewModel() {
 
     private fun getProfile() {
         val user = User(
-            0, "Name", "Surname", "Pinus",
+            "myId", "Name", "Surname", "Pinus",
             "https://cdn.leroymerlin.ru/lmru/image/upload/v1694419671/b_white,c_pad,d_photoiscoming.png,f_auto,h_600,q_auto,w_600/lmcode/y6oYV1zCTUeJxo223hwX0w/91313845.jpg"
         )
         _state.update { it.copy(profile = user, isLoading = false) }

@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -22,7 +21,7 @@ fun BottomBar(
     val items = listOf(
         NavigationScreen.FriendList,
         NavigationScreen.Camera,
-        NavigationScreen.Profile,
+        NavigationScreen.History,
     )
 
     NavigationBar(

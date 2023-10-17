@@ -1,8 +1,14 @@
 package com.raxors.photobooth.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.raxors.photobooth.data.PhotoBoothApi
+import com.raxors.photobooth.BuildConfig
+import com.raxors.photobooth.core.utils.TokenManager
+import com.raxors.photobooth.core.utils.network.AuthAuthenticator
+import com.raxors.photobooth.core.utils.network.AuthInterceptor
+import com.raxors.photobooth.data.api.PhotoBoothApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,12 +26,18 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(@ApplicationContext context: Context): OkHttpClient {
+    fun provideOkHttpClient(
+        @ApplicationContext context: Context,
+        authInterceptor: AuthInterceptor,
+        authAuthenticator: AuthAuthenticator
+    ): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(15, TimeUnit.SECONDS)
             .readTimeout(15, TimeUnit.SECONDS)
             .writeTimeout(15, TimeUnit.SECONDS)
+            .addInterceptor(authInterceptor)
             .addInterceptor(ChuckerInterceptor(context))
+            .authenticator(authAuthenticator)
             .build()
     }
 
@@ -33,7 +45,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://167.172.106.38:8080/api/v1/")
+            .baseUrl(BuildConfig.BASE_HOST + BuildConfig.API_VERSION)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
@@ -44,4 +56,19 @@ object NetworkModule {
     fun provideApi(retrofit: Retrofit): PhotoBoothApi {
         return retrofit.create(PhotoBoothApi::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun provideTokenManager(dataStore: DataStore<Preferences>): TokenManager =
+        TokenManager(dataStore)
+
+    @Singleton
+    @Provides
+    fun provideAuthInterceptor(tokenManager: TokenManager): AuthInterceptor =
+        AuthInterceptor(tokenManager)
+
+    @Singleton
+    @Provides
+    fun provideAuthAuthenticator(tokenManager: TokenManager): AuthAuthenticator =
+        AuthAuthenticator(tokenManager)
 }

@@ -22,7 +22,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.raxors.photobooth.core.navigation.NavigationScreen
 import com.raxors.photobooth.ui.screens.camera.CameraScreen
 import com.raxors.photobooth.ui.screens.friendlist.FriendListScreen
-import com.raxors.photobooth.ui.screens.profile.ProfileScreen
 
 @Composable
 fun MainScreen(
@@ -32,7 +31,7 @@ fun MainScreen(
     val items = listOf(
         NavigationScreen.FriendList,
         NavigationScreen.Camera,
-        NavigationScreen.Profile,
+        NavigationScreen.History,
     )
     Scaffold(
         bottomBar = {
@@ -82,7 +81,7 @@ fun MainScreen(
                 CameraScreen(navController, applicationContext)
             }
             composable(
-                route = NavigationScreen.Profile.route,
+                route = NavigationScreen.History.route,
                 enterTransition = { EnterTransition.None },
                 exitTransition = { ExitTransition.None },
                 popEnterTransition = { EnterTransition.None },

@@ -1,8 +1,8 @@
 package com.raxors.photobooth.ui.screens.auth.registration
 
-import com.raxors.photobooth.core.ScreenState
+import com.raxors.photobooth.core.UiState
 
-data class RegistrationScreenState(
+data class RegistrationUiState(
     val username: String? = null,
     val password: String? = null,
     val email: String? = null,
@@ -10,4 +10,4 @@ data class RegistrationScreenState(
     val passwordError: String? = null,
     val emailError: String? = null,
     val navigationRoute: String? = null
-): ScreenState
+): UiState

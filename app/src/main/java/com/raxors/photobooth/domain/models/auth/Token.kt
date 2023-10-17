@@ -3,10 +3,10 @@ package com.raxors.photobooth.domain.models.auth
 import com.raxors.photobooth.data.models.response.TokenResponse
 
 data class Token(
-    val accessToken: String? = null,
-    val refreshToken: String? = null,
-    val tokenType: String? = null,
-    val expiresAt: String? = null
+    val accessToken: String,
+    val refreshToken: String,
+    val tokenType: String,
+    val expiresAt: String
 ) {
     companion object {
         fun TokenResponse.toModel() = Token(

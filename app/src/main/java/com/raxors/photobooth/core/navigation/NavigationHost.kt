@@ -34,7 +34,7 @@ fun NavigationHost(
             exitTransition = { ExitTransition.None },
             popEnterTransition = { EnterTransition.None },
             popExitTransition = { ExitTransition.None }) { CameraScreen(navHostController, context) }
-        composable(route = NavigationScreen.Profile.route,
+        composable(route = NavigationScreen.History.route,
             enterTransition = { EnterTransition.None },
             exitTransition = { ExitTransition.None },
             popEnterTransition = { EnterTransition.None },

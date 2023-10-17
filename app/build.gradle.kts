@@ -16,12 +16,12 @@ android {
         minSdk = 26
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
-
+        versionName = "0.0.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
+        setProperty("archivesBaseName", "PhotoBooth_alpha_$versionName")
     }
 
     buildTypes {
@@ -31,6 +31,13 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_HOST", "\"http://167.172.106.38:8080\"")
+            buildConfigField("String", "API_VERSION", "/api/v1/")
+        }
+        debug {
+            buildConfigField("String", "BASE_HOST", "\"http://167.172.106.38:8080\"")
+            buildConfigField("String", "API_VERSION", "\"/api/v1/\"")
+
         }
     }
     compileOptions {
@@ -97,6 +104,10 @@ dependencies {
     implementation(libs.androidx.camera.view)
 //    implementation(libs.androidx.camera.mlkit.vision)
     implementation(libs.androidx.camera.extensions)
+
+    //Paging
+    implementation(libs.androidx.paging.runtime.ktx)
+    implementation(libs.androidx.paging.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

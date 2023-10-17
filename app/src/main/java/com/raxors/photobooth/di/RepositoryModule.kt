@@ -2,14 +2,16 @@ package com.raxors.photobooth.di
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import com.raxors.photobooth.data.AuthRepositoryImpl
-import com.raxors.photobooth.data.PhotoBoothApi
+import com.raxors.photobooth.core.utils.TokenManager
+import com.raxors.photobooth.data.repository.AppRepositoryImpl
+import com.raxors.photobooth.data.repository.AuthRepositoryImpl
+import com.raxors.photobooth.data.api.PhotoBoothApi
+import com.raxors.photobooth.domain.AppRepository
 import com.raxors.photobooth.domain.AuthRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -18,7 +20,13 @@ object RepositoryModule {
     @Provides
     fun provideAuthRepository(
         api: PhotoBoothApi,
+        tokenManager: TokenManager
+    ): AuthRepository = AuthRepositoryImpl(api, tokenManager)
+
+    @Provides
+    fun provideAppRepository(
+        api: PhotoBoothApi,
         dataStore: DataStore<Preferences>
-    ): AuthRepository = AuthRepositoryImpl(api, dataStore)
+    ): AppRepository = AppRepositoryImpl(api, dataStore)
 
 }

@@ -1,17 +1,17 @@
-package com.raxors.photobooth.data
+package com.raxors.photobooth.data.repository
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
+import com.raxors.photobooth.core.utils.TokenManager
+import com.raxors.photobooth.data.api.PhotoBoothApi
 import com.raxors.photobooth.data.models.request.LoginRequest
 import com.raxors.photobooth.data.models.request.RegisterRequest
 import com.raxors.photobooth.domain.AuthRepository
+import com.raxors.photobooth.domain.models.auth.Token
 import com.raxors.photobooth.domain.models.auth.Token.Companion.toModel
+import kotlinx.coroutines.flow.Flow
 
 class AuthRepositoryImpl(
     private val api: PhotoBoothApi,
-    private val dataStore: DataStore<Preferences>
+    private val tokenManager: TokenManager
 ) : AuthRepository {
 
     override suspend fun login(username: String, password: String) =
@@ -21,10 +21,17 @@ class AuthRepositoryImpl(
         api.register(RegisterRequest(username, password, email)).toModel()
 
     override suspend fun setIsLogged(isLogged: Boolean) {
-        dataStore.edit { settings ->
-            val IS_LOGGED_KEY = booleanPreferencesKey("isLogged")
-            settings[IS_LOGGED_KEY] = isLogged
-        }
+        tokenManager.setIsLogged(isLogged)
     }
+
+
+
+    override suspend fun saveToken(token: Token) {
+        tokenManager.saveAccessToken(token.accessToken)
+        tokenManager.saveRefreshToken(token.refreshToken)
+    }
+
+    override fun isLogged(): Flow<Boolean?> =
+        tokenManager.isLogged()
 
 }

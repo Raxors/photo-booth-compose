@@ -2,6 +2,7 @@
     <string name="app_name">Photo Booth</string>
 
     <string name="profile">Profile</string>
+    <string name="history">History</string>
     <string name="friend_list">Friend List</string>
     <string name="camera">Camera</string>
     <string name="username">Username</string>

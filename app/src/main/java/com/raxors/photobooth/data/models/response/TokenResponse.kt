@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName
 
 data class TokenResponse(
     @SerializedName("accessToken")
-    val accessToken: String? = null,
+    val accessToken: String,
     @SerializedName("expiresAt")
-    val expiresAt: String? = null,
+    val expiresAt: String,
     @SerializedName("refreshToken")
-    val refreshToken: String? = null,
+    val refreshToken: String,
     @SerializedName("tokenType")
-    val tokenType: String? = null
+    val tokenType: String
 )

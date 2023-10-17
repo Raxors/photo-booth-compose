@@ -37,11 +37,11 @@ fun ProfileScreen(
         state.profile?.let {
             with(it) {
                 AsyncImage(
-                    model = image,
+                    model = imagePath,
                     contentDescription = "User avatar",
                     modifier = Modifier.size(256.dp).clip(CircleShape)
                 )
-                Text(text = "$firstName $lastName")
+                Text(text = "$name")
                 Text(text = "@$username")
             }
         }

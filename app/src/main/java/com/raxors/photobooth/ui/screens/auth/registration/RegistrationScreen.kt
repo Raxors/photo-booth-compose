@@ -1,6 +1,5 @@
 package com.raxors.photobooth.ui.screens.auth.registration
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -21,18 +19,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.ExperimentalTextApi
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.raxors.photobooth.R
 
@@ -63,7 +54,7 @@ fun RegistrationScreen(
         OutlinedTextField(
             value = state.username ?: "",
             onValueChange = {
-                viewModel.onEvent(RegistrationScreenEvent.OnUsernameChanged(it))
+                viewModel.onEvent(RegistrationUiEvent.OnUsernameChanged(it))
             },
             label = {
                 Text(text = stringResource(R.string.username))
@@ -74,7 +65,7 @@ fun RegistrationScreen(
         OutlinedTextField(
             value = state.password ?: "",
             onValueChange = {
-                viewModel.onEvent(RegistrationScreenEvent.OnPasswordChanged(it))
+                viewModel.onEvent(RegistrationUiEvent.OnPasswordChanged(it))
             },
             label = {
                 Text(text = stringResource(R.string.password))
@@ -86,7 +77,7 @@ fun RegistrationScreen(
         OutlinedTextField(
             value = state.email ?: "",
             onValueChange = {
-                viewModel.onEvent(RegistrationScreenEvent.OnEmailChanged(it))
+                viewModel.onEvent(RegistrationUiEvent.OnEmailChanged(it))
             },
             label = {
                 Text(text = stringResource(R.string.email))
@@ -102,7 +93,7 @@ fun RegistrationScreen(
                 val email = state.email
                 if (username != null && password != null && email != null)
                     viewModel.onEvent(
-                        RegistrationScreenEvent.OnRegistrationClicked(
+                        RegistrationUiEvent.OnRegistrationClicked(
                             username,
                             password,
                             email

@@ -10,25 +10,25 @@ import javax.inject.Inject
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
     private val repo: AuthRepository
-) : BaseViewModel<RegistrationScreenState, RegistrationScreenEvent>() {
+) : BaseViewModel<RegistrationUiState, RegistrationUiEvent>() {
 
-    override fun initialState(): RegistrationScreenState = RegistrationScreenState()
+    override fun initialState(): RegistrationUiState = RegistrationUiState()
 
-    fun onEvent(event: RegistrationScreenEvent) {
+    fun onEvent(event: RegistrationUiEvent) {
         when (event) {
-            is RegistrationScreenEvent.OnUsernameChanged -> {
+            is RegistrationUiEvent.OnUsernameChanged -> {
                 setState { copy(username = event.value) }
             }
 
-            is RegistrationScreenEvent.OnPasswordChanged -> {
+            is RegistrationUiEvent.OnPasswordChanged -> {
                 setState { copy(password = event.value) }
             }
 
-            is RegistrationScreenEvent.OnEmailChanged -> {
+            is RegistrationUiEvent.OnEmailChanged -> {
                 setState { copy(email = event.value) }
             }
 
-            is RegistrationScreenEvent.OnRegistrationClicked -> {
+            is RegistrationUiEvent.OnRegistrationClicked -> {
                 register(event.username, event.password, event.email)
             }
         }
@@ -38,7 +38,7 @@ class RegistrationViewModel @Inject constructor(
         launch({
             val token = repo.register(username, password.sha256(), email)
             setState { copy(navigationRoute = Screen.MainScreen.route) }
-        }, error = {
+        }, onError = {
 
         })
     }

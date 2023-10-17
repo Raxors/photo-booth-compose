@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.raxors.photobooth.domain.AuthRepository
 import com.raxors.photobooth.domain.models.auth.Token
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -17,12 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val dataStore: DataStore<Preferences>
+    private val authRepo: AuthRepository
 ): ViewModel() {
 
-    val IS_LOGGED_KEY = booleanPreferencesKey("isLogged")
-    val isLogged: Flow<Boolean?> = dataStore.data.map {
-        it[IS_LOGGED_KEY]
-    }
+    val isLogged: Flow<Boolean?> = authRepo.isLogged()
 
 }

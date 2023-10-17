@@ -1,6 +1,5 @@
 package com.raxors.photobooth.ui.screens.auth.login
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -55,7 +54,7 @@ fun LoginScreen(
         OutlinedTextField(
             value = state.username ?: "",
             onValueChange = {
-                viewModel.onEvent(LoginScreenEvent.OnUsernameChanged(it))
+                viewModel.onEvent(LoginUiEvent.OnUsernameChanged(it))
             },
             label = {
                 Text(text = stringResource(R.string.username))
@@ -66,7 +65,7 @@ fun LoginScreen(
         OutlinedTextField(
             value = state.password ?: "",
             onValueChange = {
-                viewModel.onEvent(LoginScreenEvent.OnPasswordChanged(it))
+                viewModel.onEvent(LoginUiEvent.OnPasswordChanged(it))
             },
             label = {
                 Text(text = stringResource(R.string.password))
@@ -80,7 +79,7 @@ fun LoginScreen(
                 val username = state.username
                 val password = state.password
                 if (username != null && password != null)
-                    viewModel.onEvent(LoginScreenEvent.OnLoginClicked(username, password))
+                    viewModel.onEvent(LoginUiEvent.OnLoginClicked(username, password))
             },
             Modifier.width(256.dp)
         ) {
@@ -102,7 +101,7 @@ fun LoginScreen(
         ) {
             registrationText.getStringAnnotations(it, it).firstOrNull()?.tag?.let { tag ->
                 if (tag == "registrationTag")
-                    viewModel.onEvent(LoginScreenEvent.OnRegisterClicked)
+                    viewModel.onEvent(LoginUiEvent.OnRegisterClicked)
             }
         }
     }
