@@ -78,42 +78,53 @@ fun UserScreen(
                             shape = RoundedCornerShape(16.dp)
                         )
                     ) {
-                        if (user.relationship == Relationship.STRANGER || user.relationship == Relationship.INCOMING_FRIEND_REQUEST || user.relationship == Relationship.OUTGOING_FRIEND_REQUEST) {
-                            FloatingActionButton(onClick = {
-                            }) {
-                                Icon(
-                                    imageVector = Icons.Rounded.PersonAdd,
-                                    contentDescription = "Add user button"
-                                )
-                            }
-                            if (user.relationship == Relationship.INCOMING_FRIEND_REQUEST || user.relationship == Relationship.OUTGOING_FRIEND_REQUEST) {
-                                Spacer(modifier = Modifier.size(8.dp))
+                        when (user.relationship) {
+                            Relationship.STRANGER, Relationship.INCOMING_FRIEND_REQUEST -> {
                                 FloatingActionButton(onClick = {
                                 }) {
                                     Icon(
-                                        imageVector = Icons.Rounded.PersonRemove,
-                                        contentDescription = "Remove user button"
+                                        imageVector = Icons.Rounded.PersonAdd,
+                                        contentDescription = "Add user button"
+                                    )
+                                }
+                                if (user.relationship == Relationship.INCOMING_FRIEND_REQUEST || user.relationship == Relationship.OUTGOING_FRIEND_REQUEST) {
+                                    Spacer(modifier = Modifier.size(8.dp))
+                                    FloatingActionButton(onClick = {
+                                    }) {
+                                        Icon(
+                                            imageVector = Icons.Rounded.PersonRemove,
+                                            contentDescription = "Remove user button"
+                                        )
+                                    }
+                                }
+                            }
+                            Relationship.OUTGOING_FRIEND_REQUEST -> {
+                                FloatingActionButton(onClick = {
+                                }) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.PersonAdd,
+                                        contentDescription = "Add user button"
                                     )
                                 }
                             }
-                        } else {
-                            FloatingActionButton(
-                                containerColor = if (isExpandedButtonState) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.primaryContainer,
-                                onClick = {
-                                    isExpandedButtonState = !isExpandedButtonState
-                                }) {
-                                Icon(
-                                    imageVector = Icons.Rounded.Menu,
-                                    contentDescription = "Menu button"
-                                )
-                            }
-                            AnimatedVisibility(
-                                visible = isExpandedButtonState,
-                                enter = expandVertically() + fadeIn(),
-                                exit = shrinkVertically() + fadeOut()
-                            ) {
-                                Column {
-                                    Spacer(modifier = Modifier.size(8.dp))
+                            else -> {
+                                FloatingActionButton(
+                                    containerColor = if (isExpandedButtonState) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.primaryContainer,
+                                    onClick = {
+                                        isExpandedButtonState = !isExpandedButtonState
+                                    }) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Menu,
+                                        contentDescription = "Menu button"
+                                    )
+                                }
+                                AnimatedVisibility(
+                                    visible = isExpandedButtonState,
+                                    enter = expandVertically() + fadeIn(),
+                                    exit = shrinkVertically() + fadeOut()
+                                ) {
+                                    Column {
+                                        Spacer(modifier = Modifier.size(8.dp))
 //                                    FloatingActionButton(onClick = {
 //                                    }) {
 //                                        Icon(
@@ -122,12 +133,13 @@ fun UserScreen(
 //                                        )
 //                                    }
 //                                    Spacer(modifier = Modifier.size(8.dp))
-                                    FloatingActionButton(onClick = {
-                                    }) {
-                                        Icon(
-                                            imageVector = Icons.Rounded.PersonRemove,
-                                            contentDescription = "Remove user button"
-                                        )
+                                        FloatingActionButton(onClick = {
+                                        }) {
+                                            Icon(
+                                                imageVector = Icons.Rounded.PersonRemove,
+                                                contentDescription = "Remove user button"
+                                            )
+                                        }
                                     }
                                 }
                             }

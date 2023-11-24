@@ -1,6 +1,7 @@
 package com.raxors.photobooth.ui.screens.friendlist.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -26,12 +27,14 @@ import com.raxors.photobooth.domain.models.User
 fun IncomingItem(
     item: User,
     accept: (User) -> Unit,
-    decline: (User) -> Unit
+    decline: (User) -> Unit,
+    openUser: (User) -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
+            .clickable { openUser(item) }
     ) {
         AsyncImage(
             modifier = Modifier

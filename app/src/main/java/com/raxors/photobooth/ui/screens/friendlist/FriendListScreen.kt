@@ -140,6 +140,9 @@ fun FriendListScreen(
                                                     )
                                                 )
                                             },
+                                            openUser = {
+                                                navHostController.navigate(CommonScreen.User(item.id).route)
+                                            }
                                         )
                                     }
                                 }
@@ -162,6 +165,9 @@ fun FriendListScreen(
                                                         item
                                                     )
                                                 )
+                                            },
+                                            openUser = {
+                                                navHostController.navigate(CommonScreen.User(item.id).route)
                                             }
                                         )
                                     }
