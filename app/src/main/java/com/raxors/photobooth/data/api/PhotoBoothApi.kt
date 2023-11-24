@@ -4,6 +4,8 @@ import com.raxors.photobooth.data.models.request.AddUserRequest
 import com.raxors.photobooth.data.models.request.DeleteUserRequest
 import com.raxors.photobooth.data.models.request.LoginRequest
 import com.raxors.photobooth.data.models.request.RegisterRequest
+import com.raxors.photobooth.data.models.request.SendPhotoRequest
+import com.raxors.photobooth.data.models.response.ImageResponse
 import com.raxors.photobooth.data.models.response.TokenResponse
 import com.raxors.photobooth.data.models.response.UserResponse
 import retrofit2.Response
@@ -11,6 +13,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface PhotoBoothApi {
@@ -45,4 +48,16 @@ interface PhotoBoothApi {
         @Query("size") size: Int,
         @Query("username") username: String
     ): List<UserResponse>
+
+    @GET("profile/{userId}")
+    suspend fun getUser(@Path("userId") userId: String): UserResponse
+
+    @GET("profile")
+    suspend fun getProfile(): UserResponse
+
+    @POST("image/photo")
+    suspend fun sendPhoto(@Body sendPhotoRequest: SendPhotoRequest)
+
+    @GET("image/all")
+    suspend fun getAllPhotos(): List<ImageResponse>
 }

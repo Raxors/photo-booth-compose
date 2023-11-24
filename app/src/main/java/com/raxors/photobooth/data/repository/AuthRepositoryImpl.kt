@@ -24,8 +24,6 @@ class AuthRepositoryImpl(
         tokenManager.setIsLogged(isLogged)
     }
 
-
-
     override suspend fun saveToken(token: Token) {
         tokenManager.saveAccessToken(token.accessToken)
         tokenManager.saveRefreshToken(token.refreshToken)
@@ -33,5 +31,10 @@ class AuthRepositoryImpl(
 
     override fun isLogged(): Flow<Boolean?> =
         tokenManager.isLogged()
+
+    override suspend fun clearToken() {
+        tokenManager.deleteAccessToken()
+        tokenManager.deleteRefreshToken()
+    }
 
 }

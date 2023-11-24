@@ -9,7 +9,7 @@ interface AuthRepository {
     suspend fun register(username: String, password: String, email: String): Token
     suspend fun setIsLogged(isLogged: Boolean)
     suspend fun saveToken(token: Token)
-
     fun isLogged(): Flow<Boolean?>
+    suspend fun clearToken()
 
 }

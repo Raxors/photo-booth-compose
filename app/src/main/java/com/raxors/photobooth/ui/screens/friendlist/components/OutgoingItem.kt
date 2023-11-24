@@ -42,12 +42,13 @@ fun OutgoingItem(
         )
         Spacer(Modifier.size(16.dp))
         Column {
+            val name = if (item.name.isNullOrBlank()) item.username.toString() else item.name
             Text(
-                item.name.toString(),
+                text = name,
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
-                "@${item.username.toString()}",
+                text = "@${item.username.toString()}",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.primary
             )

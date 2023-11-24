@@ -19,7 +19,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.raxors.photobooth.core.navigation.NavigationScreen
+import com.raxors.photobooth.core.navigation.BottomNavScreen
 import com.raxors.photobooth.ui.screens.camera.CameraScreen
 import com.raxors.photobooth.ui.screens.friendlist.FriendListScreen
 
@@ -29,9 +29,9 @@ fun MainScreen(
     navController: NavHostController
 ) {
     val items = listOf(
-        NavigationScreen.FriendList,
-        NavigationScreen.Camera,
-        NavigationScreen.History,
+        BottomNavScreen.FriendList,
+        BottomNavScreen.Camera,
+        BottomNavScreen.History,
     )
     Scaffold(
         bottomBar = {
@@ -59,11 +59,11 @@ fun MainScreen(
     ) { innerPadding ->
         NavHost(
             navController,
-            startDestination = NavigationScreen.Camera.route,
+            startDestination = BottomNavScreen.Camera.route,
             Modifier.padding(innerPadding)
         ) {
             composable(
-                route = NavigationScreen.FriendList.route,
+                route = BottomNavScreen.FriendList.route,
                 enterTransition = { EnterTransition.None },
                 exitTransition = { ExitTransition.None },
                 popEnterTransition = { EnterTransition.None },
@@ -72,7 +72,7 @@ fun MainScreen(
                 FriendListScreen(navController)
             }
             composable(
-                route = NavigationScreen.Camera.route,
+                route = BottomNavScreen.Camera.route,
                 enterTransition = { EnterTransition.None },
                 exitTransition = { ExitTransition.None },
                 popEnterTransition = { EnterTransition.None },
@@ -81,7 +81,7 @@ fun MainScreen(
                 CameraScreen(navController, applicationContext)
             }
             composable(
-                route = NavigationScreen.History.route,
+                route = BottomNavScreen.History.route,
                 enterTransition = { EnterTransition.None },
                 exitTransition = { ExitTransition.None },
                 popEnterTransition = { EnterTransition.None },

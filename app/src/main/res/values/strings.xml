@@ -13,4 +13,10 @@
     <string name="register">Register</string>
     <string name="sign_up">Sign up</string>
     <string name="email">Email</string>
+    <string name="send_photo">Send Photo</string>
+    <string name="logout">Logout</string>
+    <string name="default_notification_channel_id">photo_booth_push_channel</string>
+    <string name="profile_name">Name</string>
+    <string name="profile_username">Username</string>
+    <string name="profile_edit">Edit profile</string>
 </resources>

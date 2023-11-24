@@ -27,8 +27,7 @@ fun ExpandableList(
         exit = shrinkVertically() + fadeOut()) {
         LazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
-            contentPadding = PaddingValues(vertical = 16.dp),
-            modifier = Modifier.fillMaxHeight()
+            contentPadding = PaddingValues(vertical = 8.dp),
         ) {
             items(
                 count = items.itemCount,

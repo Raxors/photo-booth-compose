@@ -5,6 +5,8 @@ plugins {
     kotlin("kapt")
 //    kotlin("plugin.serialization") version "1.9.0"
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -73,9 +75,20 @@ dependencies {
 
     implementation(libs.androidx.material.icons.extended)
 
+    implementation(libs.accompanist.swiperefresh)
+
+    //Firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.4.0"))
+    implementation("com.google.firebase:firebase-messaging-ktx")
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
+    implementation("com.google.firebase:firebase-analytics-ktx")
+//    implementation(libs.firebase.messaging)
+
     //Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
+    implementation(libs.androidx.lifecycle.runtime.compose)
 //    implementation(libs.retrofit2.kotlinx.serialization.converter)
 
     //Chucker

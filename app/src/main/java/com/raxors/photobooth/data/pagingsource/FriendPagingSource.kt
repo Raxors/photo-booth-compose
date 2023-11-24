@@ -7,7 +7,7 @@ import com.raxors.photobooth.data.mappers.toUser
 import com.raxors.photobooth.domain.models.User
 
 class FriendPagingSource(
-    private val api: PhotoBoothApi
+    private val api: PhotoBoothApi,
 ) : PagingSource<Int, User>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, User> {

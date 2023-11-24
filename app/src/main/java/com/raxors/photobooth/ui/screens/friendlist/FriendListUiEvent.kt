@@ -10,6 +10,9 @@ sealed interface FriendListUiEvent : UiEvent {
     data object IncomingExpand : FriendListUiEvent
     data object OutgoingExpand : FriendListUiEvent
     data object FriendsExpand : FriendListUiEvent
-    data class OnSearch(val query: String) : FriendListUiEvent
+    data class OnSearchTextChanged(val query: String) : FriendListUiEvent
+    data object OnToggleSearch : FriendListUiEvent
+    data object OnClearSearch : FriendListUiEvent
+
 
 }

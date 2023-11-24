@@ -21,8 +21,13 @@ class HistoryViewModel @Inject constructor(
     }
     override fun initialState(): HistoryUiState = HistoryUiState()
 
-    private fun getHistory() {
-
+    fun getHistory() {
+        launch({
+            val images = repo.getAllImages()
+            setState { copy(imageList = images, isLoading = false) }
+        }, onError = {
+            //TODO handle error
+        })
     }
 
 }
