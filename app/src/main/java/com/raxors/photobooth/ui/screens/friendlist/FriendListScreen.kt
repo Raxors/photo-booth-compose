@@ -176,8 +176,7 @@ fun FriendListScreen(
                             ExpandableListHeader(
                                 title = "Friends",
                                 isExpanded = state.isFriendsExpanded,
-                                clickExpand = { viewModel.onEvent(FriendListUiEvent.FriendsExpand) },
-                                isRoundedBottom = true
+                                clickExpand = { viewModel.onEvent(FriendListUiEvent.FriendsExpand) }
                             ) { isExpanded ->
                                 ExpandableList(items = friends, isExpanded = isExpanded) { item ->
                                     FriendItem(

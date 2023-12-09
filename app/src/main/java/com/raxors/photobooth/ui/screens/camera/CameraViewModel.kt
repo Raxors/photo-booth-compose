@@ -2,7 +2,6 @@ package com.raxors.photobooth.ui.screens.camera
 
 import com.raxors.photobooth.core.base.BaseViewModel
 import com.raxors.photobooth.domain.AppRepository
-import com.raxors.photobooth.ui.screens.user.UserUiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -24,13 +23,5 @@ class CameraViewModel @Inject constructor(
                 setState { copy(isFrontCamera = event.isFrontCamera) }
             }
         }
-    }
-
-    fun sendImageToFriends(base64Image: String) {
-        launch({
-            repo.sendPhoto(null, base64Image)
-        }, onError = {
-
-        })
     }
 }

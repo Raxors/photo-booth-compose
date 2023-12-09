@@ -41,14 +41,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.raxors.photobooth.BuildConfig
+import com.raxors.photobooth.R
 import com.raxors.photobooth.domain.models.Relationship
 import com.raxors.photobooth.ui.screens.camera.CameraViewModel
+import com.raxors.photobooth.ui.screens.user.components.ConfirmAlertDialog
 
 @Composable
 fun UserScreen(
@@ -59,6 +62,19 @@ fun UserScreen(
 
     var isExpandedButtonState by remember {
         mutableStateOf(false)
+    }
+
+    val openAlertDialog = remember { mutableStateOf(false) }
+    if (openAlertDialog.value) {
+        ConfirmAlertDialog(
+            onDismissRequest = { openAlertDialog.value = false },
+            onConfirmation = {
+                viewModel.onEvent(UserUiEvent.OnDeleteUser)
+                openAlertDialog.value = false
+            },
+            dialogTitle = stringResource(id = R.string.remove_friend),
+            dialogText = stringResource(id = R.string.remove_friend_hint)
+        )
     }
 
     Column(
@@ -81,6 +97,7 @@ fun UserScreen(
                         when (user.relationship) {
                             Relationship.STRANGER, Relationship.INCOMING_FRIEND_REQUEST -> {
                                 FloatingActionButton(onClick = {
+                                    viewModel.onEvent(UserUiEvent.OnAddUser)
                                 }) {
                                     Icon(
                                         imageVector = Icons.Rounded.PersonAdd,
@@ -90,6 +107,7 @@ fun UserScreen(
                                 if (user.relationship == Relationship.INCOMING_FRIEND_REQUEST || user.relationship == Relationship.OUTGOING_FRIEND_REQUEST) {
                                     Spacer(modifier = Modifier.size(8.dp))
                                     FloatingActionButton(onClick = {
+                                        viewModel.onEvent(UserUiEvent.OnDeleteUser)
                                     }) {
                                         Icon(
                                             imageVector = Icons.Rounded.PersonRemove,
@@ -100,10 +118,11 @@ fun UserScreen(
                             }
                             Relationship.OUTGOING_FRIEND_REQUEST -> {
                                 FloatingActionButton(onClick = {
+                                    viewModel.onEvent(UserUiEvent.OnDeleteUser)
                                 }) {
                                     Icon(
-                                        imageVector = Icons.Rounded.PersonAdd,
-                                        contentDescription = "Add user button"
+                                        imageVector = Icons.Rounded.PersonRemove,
+                                        contentDescription = "Remove user button"
                                     )
                                 }
                             }
@@ -125,15 +144,8 @@ fun UserScreen(
                                 ) {
                                     Column {
                                         Spacer(modifier = Modifier.size(8.dp))
-//                                    FloatingActionButton(onClick = {
-//                                    }) {
-//                                        Icon(
-//                                            imageVector = Icons.Rounded.PersonAdd,
-//                                            contentDescription = "Add user button"
-//                                        )
-//                                    }
-//                                    Spacer(modifier = Modifier.size(8.dp))
                                         FloatingActionButton(onClick = {
+                                            openAlertDialog.value = true
                                         }) {
                                             Icon(
                                                 imageVector = Icons.Rounded.PersonRemove,

@@ -16,5 +16,8 @@ interface AppRepository {
     suspend fun sendPhoto(listId: List<String>?, base64: String)
     suspend fun getAllImages(): List<Image>
     suspend fun getProfile(): User
+    suspend fun changeProfile(name: String? = null, status: String? = null)
+    suspend fun changeAvatar(file: String)
+    suspend fun getImageInfo(imageId: String): Image
 
 }

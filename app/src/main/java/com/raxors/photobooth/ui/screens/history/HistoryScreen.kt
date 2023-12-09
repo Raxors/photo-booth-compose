@@ -1,5 +1,6 @@
 package com.raxors.photobooth.ui.screens.history
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,6 +20,7 @@ import coil.compose.AsyncImage
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.raxors.photobooth.BuildConfig
+import com.raxors.photobooth.core.navigation.CommonScreen
 
 @Composable
 fun HistoryScreen(
@@ -43,7 +45,10 @@ fun HistoryScreen(
             ) { image ->
                 AsyncImage(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(16.dp)),
+                        .clip(RoundedCornerShape(16.dp))
+                        .clickable {
+                            image.id?.let { navHostController.navigate(CommonScreen.HistoryDetail(it).route) }
+                        },
                     model = BuildConfig.BASE_HOST + image.path,
                     contentDescription = image.id
                 )

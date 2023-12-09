@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.raxors.photobooth.core.base.BaseViewModel
+import com.raxors.photobooth.core.utils.Extensions.encodeImage
 import com.raxors.photobooth.domain.AppRepository
 import com.raxors.photobooth.domain.models.User
 import com.raxors.photobooth.ui.screens.camera.CameraUiEvent
@@ -67,7 +68,7 @@ class SendImageViewModel @Inject constructor(
                     null
                 else
                     state.value.selectedFriends.map { it.id }
-                sendImageToFriends(encodeImage(event.bitmap), listIds)
+                sendImageToFriends(event.bitmap.encodeImage(), listIds)
             }
         }
     }
@@ -89,12 +90,5 @@ class SendImageViewModel @Inject constructor(
         }, onError = {
             //TODO handle errors
         })
-    }
-
-    private fun encodeImage(bm: Bitmap): String {
-        val baos = ByteArrayOutputStream()
-        bm.compress(Bitmap.CompressFormat.JPEG, 50, baos)
-        val b = baos.toByteArray()
-        return Base64.encodeToString(b, Base64.NO_WRAP)
     }
 }

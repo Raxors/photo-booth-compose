@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.raxors.photobooth.R
+import com.raxors.photobooth.core.utils.Extensions.observeAsEvent
 
 @Composable
 fun LoginScreen(
@@ -38,8 +39,8 @@ fun LoginScreen(
     val state by viewModel.state.collectAsState()
     LaunchedEffect(state.navigationRoute) {
         state.navigationRoute?.let { route ->
-            navHostController.navigate(route)
             viewModel.resetNavigationRoute()
+            navHostController.navigate(route)
         }
     }
     Column(
@@ -95,7 +96,6 @@ fun LoginScreen(
                 append(stringResource(R.string.sign_up))
             }
         }
-        val context = LocalContext.current
         ClickableText(
             text = registrationText
         ) {

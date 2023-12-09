@@ -1,10 +1,10 @@
 package com.raxors.photobooth.ui
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -41,6 +41,7 @@ class MainActivity : ComponentActivity() {
                 this, CAMERA_PERMISSIONS, 0
             )
         }
+        askNotificationPermission()
         setContent {
             PhotoBoothTheme {
                 Surface(
@@ -90,29 +91,15 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun MainNavigation() {
         val navController = rememberNavController()
+        navController.setViewModelStore(viewModelStore)
         val navBarNavController = rememberNavController()
-
-        val isLogged by viewModel.isLogged.collectAsState(null)
-
-        val startDestination = when(isLogged) {
-            null -> {
-                Screen.SplashScreen.route
-            }
-            true -> {
-                Screen.MainScreen.route
-            }
-            false -> {
-                Screen.LoginScreen.route
-            }
-        }
-
         NavHost(
             navController = navController,
-            startDestination = startDestination
+            startDestination = Screen.SplashScreen.route
         ) {
             composable(
                 route = Screen.SplashScreen.route,
-                content = { SplashScreen() },
+                content = { SplashScreen(navController) },
                 enterTransition = { EnterTransition.None },
                 exitTransition = { ExitTransition.None },
                 popEnterTransition = { EnterTransition.None },
@@ -131,7 +118,9 @@ class MainActivity : ComponentActivity() {
                         navHostController = navBarNavController
                     ) {
                         viewModel.logout()
-                        navController.navigate(Screen.LoginScreen.route)
+                        navController.navigate(Screen.LoginScreen.route) {
+                            popUpTo(0)
+                        }
                     }
                 })
 

@@ -8,6 +8,8 @@ import com.raxors.photobooth.data.api.PhotoBoothApi
 import com.raxors.photobooth.data.mappers.toImage
 import com.raxors.photobooth.data.mappers.toUser
 import com.raxors.photobooth.data.models.request.AddUserRequest
+import com.raxors.photobooth.data.models.request.ChangeAvatarRequest
+import com.raxors.photobooth.data.models.request.ChangeProfileRequest
 import com.raxors.photobooth.data.models.request.DeleteUserRequest
 import com.raxors.photobooth.data.models.request.SendPhotoRequest
 import com.raxors.photobooth.data.pagingsource.FriendPagingSource
@@ -64,5 +66,14 @@ class AppRepositoryImpl(
 
     override suspend fun getProfile(): User =
         api.getProfile().toUser()
+
+    override suspend fun changeProfile(name: String?, status: String?) =
+        api.changeProfile(ChangeProfileRequest(name, status))
+
+    override suspend fun changeAvatar(file: String) =
+        api.changeAvatar(ChangeAvatarRequest(file))
+
+    override suspend fun getImageInfo(imageId: String): Image =
+        api.getImageInfo(imageId).toImage()
 
 }

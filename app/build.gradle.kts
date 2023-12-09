@@ -105,6 +105,7 @@ dependencies {
 
     //Navigation
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation.runtime.ktx)
 
     //Data Store
     implementation(libs.androidx.datastore.preferences)

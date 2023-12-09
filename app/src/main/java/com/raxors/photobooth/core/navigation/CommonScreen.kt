@@ -6,6 +6,11 @@ sealed class CommonScreen(val route: String) {
             const val commonRoute = "user/{userId}"
         }
     }
-
+    data class HistoryDetail(val imageId: String) : CommonScreen("image/${imageId}") {
+        companion object {
+            const val commonRoute = "image/{imageId}"
+        }
+    }
     data object Profile : CommonScreen("profile")
+    data object ProfileSettings : CommonScreen("profile_settings")
 }

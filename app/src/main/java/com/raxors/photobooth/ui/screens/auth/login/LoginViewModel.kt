@@ -3,6 +3,7 @@ package com.raxors.photobooth.ui.screens.auth.login
 import com.raxors.photobooth.core.base.BaseViewModel
 import com.raxors.photobooth.core.utils.Security.sha256
 import com.raxors.photobooth.domain.AuthRepository
+import com.raxors.photobooth.ui.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -28,7 +29,7 @@ class LoginViewModel @Inject constructor(
             }
 
             LoginUiEvent.OnRegisterClicked -> {
-                setState { copy(navigationRoute = "registration") }
+                setState { copy(navigationRoute = Screen.RegisterScreen.route) }
             }
         }
     }
@@ -38,6 +39,7 @@ class LoginViewModel @Inject constructor(
             val token = repo.login(username, password.sha256())
             repo.saveToken(token)
             repo.setIsLogged(true)
+            setState { copy(navigationRoute = Screen.MainScreen.route) }
         }, onError = {
 
         })

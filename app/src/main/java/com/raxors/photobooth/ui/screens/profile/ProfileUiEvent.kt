@@ -4,4 +4,5 @@ import com.raxors.photobooth.core.UiEvent
 
 sealed interface ProfileUiEvent : UiEvent {
     data object OnLogout : ProfileUiEvent
+    data class IsEditNameShow(val isShow: Boolean) : ProfileUiEvent
 }

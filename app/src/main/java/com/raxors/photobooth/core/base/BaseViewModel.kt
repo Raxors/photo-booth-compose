@@ -6,12 +6,14 @@ import com.raxors.photobooth.core.UiEvent
 import com.raxors.photobooth.core.UiState
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.shareIn
 
 
@@ -25,12 +27,8 @@ abstract class BaseViewModel<STATE : UiState, EVENT : UiEvent> : ViewModel() {
     val state: StateFlow<STATE>
         get() = _state.asStateFlow()
 
-    private val _uiEvent = MutableSharedFlow<EVENT>()
-    val uiEvent = _uiEvent.asSharedFlow()
-        .shareIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(),
-        )
+    private val _uiEvent = Channel<EVENT>()
+    val uiEvent = _uiEvent.receiveAsFlow()
 
     protected abstract fun initialState(): STATE
 
@@ -38,10 +36,6 @@ abstract class BaseViewModel<STATE : UiState, EVENT : UiEvent> : ViewModel() {
         val currentState = _state.value
         _state.value = reducer(currentState)
     }
-
-//    protected fun onEvent(event: EVENT) {
-//        _uiEvent
-//    }
 
     protected fun launch(block: Block<Unit>, onError: Error? = null, onCancel: Cancel? = null): Job {
         return viewModelScope.launch(Dispatchers.IO) {

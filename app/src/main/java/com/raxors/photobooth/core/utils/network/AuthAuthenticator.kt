@@ -1,6 +1,6 @@
 package com.raxors.photobooth.core.utils.network
 
-import com.raxors.photobooth.core.utils.TokenManager
+import com.raxors.photobooth.core.utils.AuthManager
 import com.raxors.photobooth.data.api.PhotoBoothApi
 import com.raxors.photobooth.data.models.response.TokenResponse
 import kotlinx.coroutines.flow.first
@@ -15,21 +15,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
 class AuthAuthenticator @Inject constructor(
-    private val tokenManager: TokenManager,
+    private val authManager: AuthManager,
 ): Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
         val token = runBlocking {
-            tokenManager.getRefreshToken().first()
+            authManager.getRefreshToken().first()
         }
         return runBlocking {
             val newToken = getNewToken(token)
             if (!newToken.isSuccessful || newToken.body() == null) {
-                tokenManager.deleteAccessToken()
-                tokenManager.deleteRefreshToken()
+                authManager.deleteAccessToken()
+                authManager.deleteRefreshToken()
             }
             newToken.body()?.let {
-                tokenManager.saveAccessToken(it.accessToken)
-                tokenManager.saveRefreshToken(it.refreshToken)
+                authManager.saveAccessToken(it.accessToken)
+                authManager.saveRefreshToken(it.refreshToken)
                 response.request.newBuilder()
                     .header("Authorization", "Bearer ${it.accessToken}")
                     .build()

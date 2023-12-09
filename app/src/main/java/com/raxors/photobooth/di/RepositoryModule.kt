@@ -2,7 +2,7 @@ package com.raxors.photobooth.di
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import com.raxors.photobooth.core.utils.TokenManager
+import com.raxors.photobooth.core.utils.AuthManager
 import com.raxors.photobooth.data.repository.AppRepositoryImpl
 import com.raxors.photobooth.data.repository.AuthRepositoryImpl
 import com.raxors.photobooth.data.api.PhotoBoothApi
@@ -20,8 +20,8 @@ object RepositoryModule {
     @Provides
     fun provideAuthRepository(
         api: PhotoBoothApi,
-        tokenManager: TokenManager
-    ): AuthRepository = AuthRepositoryImpl(api, tokenManager)
+        authManager: AuthManager
+    ): AuthRepository = AuthRepositoryImpl(api, authManager)
 
     @Provides
     fun provideAppRepository(

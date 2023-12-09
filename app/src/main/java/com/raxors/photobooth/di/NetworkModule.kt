@@ -5,7 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.raxors.photobooth.BuildConfig
-import com.raxors.photobooth.core.utils.TokenManager
+import com.raxors.photobooth.core.utils.AuthManager
 import com.raxors.photobooth.core.utils.network.AuthAuthenticator
 import com.raxors.photobooth.core.utils.network.AuthInterceptor
 import com.raxors.photobooth.data.api.PhotoBoothApi
@@ -64,16 +64,16 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideTokenManager(dataStore: DataStore<Preferences>): TokenManager =
-        TokenManager(dataStore)
+    fun provideTokenManager(dataStore: DataStore<Preferences>): AuthManager =
+        AuthManager(dataStore)
 
     @Singleton
     @Provides
-    fun provideAuthInterceptor(tokenManager: TokenManager): AuthInterceptor =
-        AuthInterceptor(tokenManager)
+    fun provideAuthInterceptor(authManager: AuthManager): AuthInterceptor =
+        AuthInterceptor(authManager)
 
     @Singleton
     @Provides
-    fun provideAuthAuthenticator(tokenManager: TokenManager): AuthAuthenticator =
-        AuthAuthenticator(tokenManager)
+    fun provideAuthAuthenticator(authManager: AuthManager): AuthAuthenticator =
+        AuthAuthenticator(authManager)
 }

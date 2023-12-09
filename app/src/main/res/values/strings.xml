@@ -19,4 +19,15 @@
     <string name="profile_name">Name</string>
     <string name="profile_username">Username</string>
     <string name="profile_edit">Edit profile</string>
+    <string name="edit_name">Edit name</string>
+    <string name="edit_username">Edit username</string>
+    <string name="edit_email">Edit email</string>
+    <string name="edit_password">Edit password</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="settings">Settings</string>
+    <string name="save">Save</string>
+    <string name="new_password">New password</string>
+    <string name="remove_friend">Remove friend</string>
+    <string name="remove_friend_hint">Do you want to remove your friend?</string>
 </resources>

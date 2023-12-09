@@ -1,4 +1,4 @@
-package com.raxors.photobooth.ui
+package com.raxors.photobooth.ui.screens.splash
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -19,17 +19,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class SplashViewModel @Inject constructor(
     private val authRepo: AuthRepository
 ) : ViewModel() {
-    fun logout() {
-        viewModelScope.launch {
-            authRepo.clearAuthInfo()
-            authRepo.clearToken()
-            authRepo.setIsLogged(false)
-        }
-    }
 
-//    val isLogged: Flow<Boolean?> = authRepo.isLogged()
+    val isLogged: Flow<Boolean> = authRepo.isLogged()
 
 }

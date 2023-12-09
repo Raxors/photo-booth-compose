@@ -37,7 +37,6 @@ fun ExpandableListHeader(
     title: String,
     isExpanded: Boolean,
     clickExpand: (Boolean) -> Unit,
-    isRoundedBottom: Boolean = false,
     content: @Composable (Boolean) -> Unit
 ) {
     val cornerRadius = animateDpAsState(targetValue = if (isExpanded) 16.dp else 0.dp, label = "")

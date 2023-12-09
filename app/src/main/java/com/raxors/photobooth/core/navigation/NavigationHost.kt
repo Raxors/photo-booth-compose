@@ -12,7 +12,9 @@ import androidx.navigation.compose.composable
 import com.raxors.photobooth.ui.screens.camera.CameraScreen
 import com.raxors.photobooth.ui.screens.friendlist.FriendListScreen
 import com.raxors.photobooth.ui.screens.history.HistoryScreen
+import com.raxors.photobooth.ui.screens.history_detail.HistoryDetailScreen
 import com.raxors.photobooth.ui.screens.profile.ProfileScreen
+import com.raxors.photobooth.ui.screens.profile_settings.ProfileSettingsScreen
 import com.raxors.photobooth.ui.screens.user.UserScreen
 
 @Composable
@@ -84,6 +86,28 @@ fun NavigationHost(
             content = {
                 bottomBarState.value = false
                 ProfileScreen(navHostController, logout)
+            }
+        )
+        composable(
+            route = CommonScreen.ProfileSettings.route,
+            enterTransition = { EnterTransition.None },
+            exitTransition = { ExitTransition.None },
+            popEnterTransition = { EnterTransition.None },
+            popExitTransition = { ExitTransition.None },
+            content = {
+                bottomBarState.value = false
+                ProfileSettingsScreen(navHostController)
+            }
+        )
+        composable(
+            route = CommonScreen.HistoryDetail.commonRoute,
+            enterTransition = { EnterTransition.None },
+            exitTransition = { ExitTransition.None },
+            popEnterTransition = { EnterTransition.None },
+            popExitTransition = { ExitTransition.None },
+            content = {
+                bottomBarState.value = false
+                HistoryDetailScreen(navHostController)
             }
         )
     }

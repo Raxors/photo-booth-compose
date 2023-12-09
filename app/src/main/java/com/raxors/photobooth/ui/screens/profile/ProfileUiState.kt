@@ -5,5 +5,6 @@ import com.raxors.photobooth.domain.models.User
 
 data class ProfileUiState(
     val profile: User? = null,
+    val isShowEditName: Boolean = false,
     val isLoading: Boolean = false
 ): UiState
