@@ -9,6 +9,7 @@ import com.raxors.photobooth.data.models.request.ChangeUsernameRequest
 import com.raxors.photobooth.data.models.request.DeleteUserRequest
 import com.raxors.photobooth.data.models.request.LoginRequest
 import com.raxors.photobooth.data.models.request.RegisterRequest
+import com.raxors.photobooth.data.models.request.SendFcmTokenRequest
 import com.raxors.photobooth.data.models.request.SendPhotoRequest
 import com.raxors.photobooth.data.models.response.AuthInfoResponse
 import com.raxors.photobooth.data.models.response.ImageResponse
@@ -88,4 +89,7 @@ interface PhotoBoothApi {
 
     @GET("image/{imageId}/info")
     suspend fun getImageInfo(@Path("imageId") imageId: String): ImageResponse
+
+    @POST("fcm/token")
+    suspend fun sendFcmToken(@Body fcmTokenRequest: SendFcmTokenRequest)
 }

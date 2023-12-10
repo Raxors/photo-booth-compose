@@ -11,6 +11,7 @@ import com.raxors.photobooth.data.models.request.AddUserRequest
 import com.raxors.photobooth.data.models.request.ChangeAvatarRequest
 import com.raxors.photobooth.data.models.request.ChangeProfileRequest
 import com.raxors.photobooth.data.models.request.DeleteUserRequest
+import com.raxors.photobooth.data.models.request.SendFcmTokenRequest
 import com.raxors.photobooth.data.models.request.SendPhotoRequest
 import com.raxors.photobooth.data.pagingsource.FriendPagingSource
 import com.raxors.photobooth.data.pagingsource.IncomingRequestPagingSource
@@ -75,5 +76,8 @@ class AppRepositoryImpl(
 
     override suspend fun getImageInfo(imageId: String): Image =
         api.getImageInfo(imageId).toImage()
+
+    override suspend fun sendFcmToken(fcmToken: String) =
+        api.sendFcmToken(SendFcmTokenRequest(fcmToken))
 
 }

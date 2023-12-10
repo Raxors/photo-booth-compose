@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.messaging.FirebaseMessaging
 import com.raxors.photobooth.domain.AuthRepository
 import com.raxors.photobooth.domain.models.auth.Token
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +24,7 @@ class MainViewModel @Inject constructor(
     private val authRepo: AuthRepository
 ) : ViewModel() {
     fun logout() {
+        FirebaseMessaging.getInstance().deleteToken()
         viewModelScope.launch {
             authRepo.clearAuthInfo()
             authRepo.clearToken()
@@ -30,6 +32,6 @@ class MainViewModel @Inject constructor(
         }
     }
 
-//    val isLogged: Flow<Boolean?> = authRepo.isLogged()
+    val isLogged: Flow<Boolean> = authRepo.isLogged()
 
 }

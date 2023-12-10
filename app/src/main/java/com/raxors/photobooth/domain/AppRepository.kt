@@ -19,5 +19,6 @@ interface AppRepository {
     suspend fun changeProfile(name: String? = null, status: String? = null)
     suspend fun changeAvatar(file: String)
     suspend fun getImageInfo(imageId: String): Image
+    suspend fun sendFcmToken(fcmToken: String)
 
 }
