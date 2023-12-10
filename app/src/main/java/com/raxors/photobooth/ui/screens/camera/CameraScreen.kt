@@ -6,9 +6,11 @@ import android.graphics.Matrix
 import android.util.Base64
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.ImageProxy
 import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
+import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -38,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -46,6 +49,7 @@ import com.raxors.photobooth.core.navigation.CommonScreen
 import com.raxors.photobooth.ui.screens.camera.bottomsheet.SendImageBottomSheet
 import com.raxors.photobooth.ui.screens.camera.components.CameraPreview
 import java.io.ByteArrayOutputStream
+import java.util.concurrent.Executors
 
 @Composable
 fun CameraScreen(
@@ -54,21 +58,27 @@ fun CameraScreen(
     viewModel: CameraViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
-    if (state.showSheet) {
-        SendImageBottomSheet(
-            bitmap = state.bitmap,
-            onDismiss = {
-                viewModel.onEvent(CameraUiEvent.OnCloseBottomSheet)
-            })
-    }
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val executor = remember { Executors.newSingleThreadExecutor() }
     val controller = remember {
         LifecycleCameraController(context).apply {
+            bindToLifecycle(lifecycleOwner)
             setEnabledUseCases(
                 CameraController.IMAGE_CAPTURE
             )
             cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
         }
     }
+
+    if (state.showSheet) {
+        controller.bindToLifecycle(lifecycleOwner)
+        SendImageBottomSheet(
+            bitmap = state.bitmap,
+            onDismiss = {
+                viewModel.onEvent(CameraUiEvent.OnCloseBottomSheet)
+            })
+    }
+
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -111,7 +121,7 @@ fun CameraScreen(
                 IconButton(
                     onClick = {
                         controller.takePicture(
-                            ContextCompat.getMainExecutor(context),
+                            executor,
                             object : ImageCapture.OnImageCapturedCallback() {
                                 override fun onCaptureSuccess(image: ImageProxy) {
                                     val bitmap = image.toBitmap()
@@ -124,6 +134,10 @@ fun CameraScreen(
                                         )
                                     )
                                     super.onCaptureSuccess(image)
+                                }
+
+                                override fun onError(exception: ImageCaptureException) {
+                                    super.onError(exception)
                                 }
                             })
                     },

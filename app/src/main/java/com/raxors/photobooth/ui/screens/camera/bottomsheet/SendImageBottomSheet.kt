@@ -53,6 +53,8 @@ fun SendImageBottomSheet(
     if (state.isPhotoSent) {
         LaunchedEffect(state) {
             modalBottomSheetState.hide()
+            viewModel.onEvent(SendImageUiEvent.CloseBottomSheet)
+            onDismiss()
         }
     }
     ModalBottomSheet(

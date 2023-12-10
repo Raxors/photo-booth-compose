@@ -91,8 +91,6 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun MainNavigation() {
         val navController = rememberNavController()
-        navController.setViewModelStore(viewModelStore)
-        val navBarNavController = rememberNavController()
         NavHost(
             navController = navController,
             startDestination = Screen.SplashScreen.route
@@ -114,8 +112,7 @@ class MainActivity : ComponentActivity() {
                 route = Screen.MainScreen.route,
                 content = {
                     AppScaffold(
-                        context = applicationContext,
-                        navHostController = navBarNavController
+                        context = applicationContext
                     ) {
                         viewModel.logout()
                         navController.navigate(Screen.LoginScreen.route) {

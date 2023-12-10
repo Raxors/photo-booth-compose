@@ -30,6 +30,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.raxors.photobooth.R
 import com.raxors.photobooth.core.utils.Extensions.observeAsEvent
+import com.raxors.photobooth.ui.Screen
 
 @Composable
 fun LoginScreen(
@@ -40,7 +41,11 @@ fun LoginScreen(
     LaunchedEffect(state.navigationRoute) {
         state.navigationRoute?.let { route ->
             viewModel.resetNavigationRoute()
-            navHostController.navigate(route)
+            navHostController.navigate(route) {
+                if (route == Screen.MainScreen.route) {
+                    popUpTo(0)
+                }
+            }
         }
     }
     Column(
@@ -50,7 +55,10 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = stringResource(R.string.app_name), style = MaterialTheme.typography.displayLarge)
+        Text(
+            text = stringResource(R.string.app_name),
+            style = MaterialTheme.typography.displayLarge
+        )
         Spacer(Modifier.size(32.dp))
         OutlinedTextField(
             value = state.username ?: "",

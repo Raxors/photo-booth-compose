@@ -10,27 +10,28 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.raxors.photobooth.core.navigation.NavigationHost
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppScaffold(
     context: Context,
-    navHostController: NavHostController,
     logout: () -> Unit
 ) {
+    val navBarNavController = rememberNavController()
     val bottomBarState = rememberSaveable { mutableStateOf(true) }
     Scaffold(
         bottomBar = {
             BottomBar(
-                navHostController = navHostController,
+                navHostController = navBarNavController,
                 bottomBarState = bottomBarState
             )
         },
     ) { innerPadding ->
         NavigationHost(
             context = context,
-            navHostController = navHostController,
+            navHostController = navBarNavController,
             modifier = Modifier.padding(innerPadding),
             bottomBarState = bottomBarState
         ) {
