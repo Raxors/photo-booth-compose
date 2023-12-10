@@ -70,7 +70,10 @@ interface PhotoBoothApi {
     suspend fun sendPhoto(@Body sendPhotoRequest: SendPhotoRequest)
 
     @GET("image/all")
-    suspend fun getAllPhotos(): List<ImageResponse>
+    suspend fun getAllPhotos(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): List<ImageResponse>
 
     @PUT("profile")
     suspend fun changeProfile(@Body changeProfileRequest: ChangeProfileRequest)

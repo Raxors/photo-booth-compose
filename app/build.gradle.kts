@@ -34,10 +34,12 @@ android {
                 "proguard-rules.pro"
             )
             buildConfigField("String", "BASE_HOST", "\"http://167.172.106.38:8080\"")
+//            buildConfigField("String", "BASE_HOST", "\"https://167.172.106.38\"")
             buildConfigField("String", "API_VERSION", "/api/v1/")
         }
         debug {
             buildConfigField("String", "BASE_HOST", "\"http://167.172.106.38:8080\"")
+//            buildConfigField("String", "BASE_HOST", "\"https://167.172.106.38\"")
             buildConfigField("String", "API_VERSION", "\"/api/v1/\"")
 
         }

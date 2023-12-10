@@ -14,6 +14,7 @@ import com.raxors.photobooth.data.models.request.DeleteUserRequest
 import com.raxors.photobooth.data.models.request.SendFcmTokenRequest
 import com.raxors.photobooth.data.models.request.SendPhotoRequest
 import com.raxors.photobooth.data.pagingsource.FriendPagingSource
+import com.raxors.photobooth.data.pagingsource.ImagePagingSource
 import com.raxors.photobooth.data.pagingsource.IncomingRequestPagingSource
 import com.raxors.photobooth.data.pagingsource.OutgoingRequestPagingSource
 import com.raxors.photobooth.data.pagingsource.SearchPagingSource
@@ -62,8 +63,11 @@ class AppRepositoryImpl(
     override suspend fun sendPhoto(listId: List<String>?, base64: String) =
         api.sendPhoto(SendPhotoRequest(base64, listId))
 
-    override suspend fun getAllImages(): List<Image> =
-        api.getAllPhotos().map { it.toImage() }
+    override suspend fun getAllImages(): Pager<Int, Image> =
+        Pager(
+            config = PagingConfig(pageSize = 21, enablePlaceholders = true, initialLoadSize = 21),
+            pagingSourceFactory = { ImagePagingSource(api) }
+        )
 
     override suspend fun getProfile(): User =
         api.getProfile().toUser()

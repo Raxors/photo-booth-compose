@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ImageResponse(
     @SerializedName("id")
-    val id: String? = null,
+    val id: String,
     @SerializedName("path")
     val path: String? = null,
     @SerializedName("thumbnailPath")

@@ -16,6 +16,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemKey
 import coil.compose.AsyncImage
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -28,6 +30,7 @@ fun HistoryScreen(
     viewModel: HistoryViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
+    val images = viewModel.images.collectAsLazyPagingItems()
     val refreshState = rememberSwipeRefreshState(isRefreshing = state.isLoading)
     SwipeRefresh(
         state = refreshState,
@@ -41,17 +44,23 @@ fun HistoryScreen(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(
-                items = state.imageList,
-            ) { image ->
-                AsyncImage(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(16.dp))
-                        .clickable {
-                            image.id?.let { navHostController.navigate(CommonScreen.HistoryDetail(it).route) }
-                        },
-                    model = BuildConfig.BASE_HOST + image.path,
-                    contentDescription = image.id
-                )
+                count = images.itemCount,
+                key = images.itemKey { item -> item.id }
+            ) { index ->
+                index.let {
+                    val item = images[it]
+                    item?.let { image ->
+                        AsyncImage(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(16.dp))
+                                .clickable {
+                                    navHostController.navigate(CommonScreen.HistoryDetail(image.id).route)
+                                },
+                            model = BuildConfig.BASE_HOST + image.path,
+                            contentDescription = image.id
+                        )
+                    }
+                }
             }
         }
     }

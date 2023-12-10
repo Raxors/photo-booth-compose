@@ -64,11 +64,10 @@ class SendImageViewModel @Inject constructor(
             }
 
             is SendImageUiEvent.SendPhoto -> {
-                val listIds = if (state.value.isAllChecked)
-                    null
-                else
-                    state.value.selectedFriends.map { it.id }
-                sendImageToFriends(event.bitmap.encodeImage(), listIds)
+                val listIds = if (state.value.isAllChecked) null
+                else state.value.selectedFriends.map { it.id }
+                val encodedImage = event.bitmap.encodeImage()
+                sendImageToFriends(encodedImage, listIds)
             }
         }
     }

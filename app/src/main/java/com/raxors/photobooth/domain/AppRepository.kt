@@ -14,7 +14,7 @@ interface AppRepository {
     suspend fun searchUser(username: String): Pager<Int, User>
     suspend fun getUser(userId: String): User
     suspend fun sendPhoto(listId: List<String>?, base64: String)
-    suspend fun getAllImages(): List<Image>
+    suspend fun getAllImages(): Pager<Int, Image>
     suspend fun getProfile(): User
     suspend fun changeProfile(name: String? = null, status: String? = null)
     suspend fun changeAvatar(file: String)
