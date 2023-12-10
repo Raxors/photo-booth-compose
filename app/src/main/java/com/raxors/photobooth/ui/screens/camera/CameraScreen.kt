@@ -40,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
@@ -69,7 +70,6 @@ fun CameraScreen(
             cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
         }
     }
-
     if (state.showSheet) {
         controller.bindToLifecycle(lifecycleOwner)
         SendImageBottomSheet(
@@ -78,98 +78,94 @@ fun CameraScreen(
                 viewModel.onEvent(CameraUiEvent.OnCloseBottomSheet)
             })
     }
-
-    Column(
-        modifier = Modifier.fillMaxSize()
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.End,
     ) {
-        Row(
+        Image(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+                .size(48.dp)
                 .clickable {
-                   navHostController.navigate(CommonScreen.Profile.route)
+                    navHostController.navigate(CommonScreen.Profile.route)
                 },
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.End,
-        ) {
-            Image(
-                modifier = Modifier.size(48.dp),
-                imageVector = Icons.Filled.AccountCircle,
-                contentDescription = "Profile",
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
-            )
-        }
-        Column(
+            imageVector = Icons.Filled.AccountCircle,
+            contentDescription = "Profile",
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
+        )
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        CameraPreview(
+            controller = controller,
             modifier = Modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+                .size(300.dp)
+                .clip(RoundedCornerShape(16.dp))
+        )
+        Spacer(Modifier.size(16.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
         ) {
-            CameraPreview(
-                controller = controller,
-                modifier = Modifier
-                    .size(300.dp)
-                    .clip(RoundedCornerShape(16.dp))
-            )
+            Spacer(Modifier.size(64.dp))
             Spacer(Modifier.size(16.dp))
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Spacer(Modifier.size(64.dp))
-                Spacer(Modifier.size(16.dp))
-                IconButton(
-                    onClick = {
-                        controller.takePicture(
-                            executor,
-                            object : ImageCapture.OnImageCapturedCallback() {
-                                override fun onCaptureSuccess(image: ImageProxy) {
-                                    val bitmap = image.toBitmap()
-                                    viewModel.onEvent(
-                                        CameraUiEvent.OnTakePhoto(
-                                            cropToSquare(
-                                                bitmap,
-                                                state.isFrontCamera
-                                            ).asImageBitmap()
-                                        )
+            IconButton(
+                onClick = {
+                    controller.takePicture(
+                        executor,
+                        object : ImageCapture.OnImageCapturedCallback() {
+                            override fun onCaptureSuccess(image: ImageProxy) {
+                                val bitmap = image.toBitmap()
+                                viewModel.onEvent(
+                                    CameraUiEvent.OnTakePhoto(
+                                        cropToSquare(
+                                            bitmap,
+                                            state.isFrontCamera
+                                        ).asImageBitmap()
                                     )
-                                    super.onCaptureSuccess(image)
-                                }
-
-                                override fun onError(exception: ImageCaptureException) {
-                                    super.onError(exception)
-                                }
-                            })
-                    },
-                    modifier = Modifier
-                        .size(64.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.RadioButtonChecked,
-                        contentDescription = "Take photo",
-                        modifier = Modifier.fillMaxSize()
-                    )
-                }
-                Spacer(Modifier.size(16.dp))
-                IconButton(
-                    onClick = {
-                        controller.cameraSelector =
-                            if (controller.cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) {
-                                viewModel.onEvent(CameraUiEvent.ChangeCamera(true))
-                                CameraSelector.DEFAULT_FRONT_CAMERA
-                            } else {
-                                viewModel.onEvent(CameraUiEvent.ChangeCamera(false))
-                                CameraSelector.DEFAULT_BACK_CAMERA
+                                )
+                                super.onCaptureSuccess(image)
                             }
-                    },
-                    modifier = Modifier
-                        .size(64.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Cameraswitch,
-                        contentDescription = "Switch camera"
-                    )
-                }
+
+                            override fun onError(exception: ImageCaptureException) {
+                                super.onError(exception)
+                            }
+                        })
+                },
+                modifier = Modifier
+                    .size(64.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.RadioButtonChecked,
+                    contentDescription = "Take photo",
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+            Spacer(Modifier.size(16.dp))
+            IconButton(
+                onClick = {
+                    controller.cameraSelector =
+                        if (controller.cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) {
+                            viewModel.onEvent(CameraUiEvent.ChangeCamera(true))
+                            CameraSelector.DEFAULT_FRONT_CAMERA
+                        } else {
+                            viewModel.onEvent(CameraUiEvent.ChangeCamera(false))
+                            CameraSelector.DEFAULT_BACK_CAMERA
+                        }
+                },
+                modifier = Modifier
+                    .size(64.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Cameraswitch,
+                    contentDescription = "Switch camera"
+                )
             }
         }
     }
