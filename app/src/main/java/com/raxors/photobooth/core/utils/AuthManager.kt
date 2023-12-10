@@ -17,6 +17,7 @@ class AuthManager(private val dataStore: DataStore<Preferences>) {
         private val USERNAME_KEY = stringPreferencesKey("username")
         private val EMAIL_KEY = stringPreferencesKey("email")
         private val IS_LOGGED_KEY = booleanPreferencesKey("is_logged")
+        private val FCM_TOKEN_KEY = stringPreferencesKey("fcm_token")
     }
 
     suspend fun setIsLogged(isLogged: Boolean) {
@@ -89,6 +90,24 @@ class AuthManager(private val dataStore: DataStore<Preferences>) {
             val username = preferences[USERNAME_KEY] ?: ""
             val email = preferences[EMAIL_KEY] ?: ""
             AuthInfo(id, username, email)
+        }
+    }
+
+    suspend fun saveFcmToken(token: String) {
+        dataStore.edit { preferences ->
+            preferences[FCM_TOKEN_KEY] = token
+        }
+    }
+
+    suspend fun deleteFcmToken() {
+        dataStore.edit { preferences ->
+            preferences.remove(FCM_TOKEN_KEY)
+        }
+    }
+
+    fun getFcmToken(): Flow<String> {
+        return dataStore.data.map { preferences ->
+            preferences[FCM_TOKEN_KEY] ?: ""
         }
     }
 

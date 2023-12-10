@@ -26,7 +26,7 @@ object RepositoryModule {
     @Provides
     fun provideAppRepository(
         api: PhotoBoothApi,
-        dataStore: DataStore<Preferences>,
-    ): AppRepository = AppRepositoryImpl(api, dataStore)
+        authManager: AuthManager
+    ): AppRepository = AppRepositoryImpl(api, authManager)
 
 }

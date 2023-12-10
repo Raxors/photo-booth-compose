@@ -31,6 +31,7 @@ import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -58,6 +59,7 @@ fun CameraScreen(
     viewModel: CameraViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
+    val fcmToken = viewModel.fcmToken.collectAsState("")
     val lifecycleOwner = LocalLifecycleOwner.current
     val executor = remember { Executors.newSingleThreadExecutor() }
     val controller = remember {
@@ -99,6 +101,11 @@ fun CameraScreen(
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
             )
         }
+        TextField(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+            value = fcmToken.value,
+            onValueChange = {}
+        )
         Column(
             modifier = Modifier
                 .fillMaxSize(),

@@ -68,7 +68,16 @@ class SendImageViewModel @Inject constructor(
                     null
                 else
                     state.value.selectedFriends.map { it.id }
-                sendImageToFriends(event.bitmap.encodeImage(), listIds)
+                var encodedImage = ""
+//                for (quality in 100 downTo 1) {
+                    val base64 = event.bitmap.encodeImage(30)
+//                    val size = base64.toByteArray().size
+//                    if (size * 3/4 < 300000) {
+                        encodedImage = base64
+//                        break
+//                    }
+//                }
+                if (encodedImage.isNotBlank()) sendImageToFriends(encodedImage, listIds)
             }
         }
     }

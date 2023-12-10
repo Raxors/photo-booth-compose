@@ -3,6 +3,7 @@ package com.raxors.photobooth.domain
 import androidx.paging.Pager
 import com.raxors.photobooth.domain.models.Image
 import com.raxors.photobooth.domain.models.User
+import kotlinx.coroutines.flow.Flow
 
 interface AppRepository {
 
@@ -20,5 +21,7 @@ interface AppRepository {
     suspend fun changeAvatar(file: String)
     suspend fun getImageInfo(imageId: String): Image
     suspend fun sendFcmToken(fcmToken: String)
+    suspend fun saveFcmToken(fcmToken: String)
+    fun getFcmToken(): Flow<String>
 
 }

@@ -1,5 +1,6 @@
 package com.raxors.photobooth.core.utils
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.util.Base64
 import androidx.compose.runtime.Composable
@@ -24,9 +25,11 @@ object Extensions {
         }
     }
 
-    fun Bitmap.encodeImage(): String {
+    fun Bitmap.encodeImage(quality: Int = 60): String {
         val baos = ByteArrayOutputStream()
-        compress(Bitmap.CompressFormat.JPEG, 50, baos)
+        val bytes = this.byteCount
+//        val quality = if (bytes > 300000) ((300000 / bytes.toFloat()) * 100).toInt() else 100
+        compress(Bitmap.CompressFormat.JPEG, quality, baos)
         val b = baos.toByteArray()
         return Base64.encodeToString(b, Base64.NO_WRAP)
     }

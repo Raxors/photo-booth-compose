@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import com.raxors.photobooth.core.utils.AuthManager
 import com.raxors.photobooth.data.api.PhotoBoothApi
 import com.raxors.photobooth.data.mappers.toImage
 import com.raxors.photobooth.data.mappers.toUser
@@ -20,10 +21,11 @@ import com.raxors.photobooth.data.pagingsource.SearchPagingSource
 import com.raxors.photobooth.domain.AppRepository
 import com.raxors.photobooth.domain.models.Image
 import com.raxors.photobooth.domain.models.User
+import kotlinx.coroutines.flow.Flow
 
 class AppRepositoryImpl(
     private val api: PhotoBoothApi,
-    private val dataStore: DataStore<Preferences>,
+    private val authManager: AuthManager
 ) : AppRepository {
 
     override suspend fun getFriendList(): Pager<Int, User> =
@@ -79,5 +81,12 @@ class AppRepositoryImpl(
 
     override suspend fun sendFcmToken(fcmToken: String) =
         api.sendFcmToken(SendFcmTokenRequest(fcmToken))
+
+    override suspend fun saveFcmToken(fcmToken: String) {
+        authManager.saveFcmToken(fcmToken)
+    }
+
+    override fun getFcmToken(): Flow<String> =
+        authManager.getFcmToken()
 
 }
