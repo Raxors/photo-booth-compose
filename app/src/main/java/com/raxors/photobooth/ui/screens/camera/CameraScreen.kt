@@ -37,6 +37,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.asImageBitmap
@@ -50,6 +51,7 @@ import com.raxors.photobooth.core.navigation.CommonScreen
 import com.raxors.photobooth.ui.screens.camera.bottomsheet.SendImageBottomSheet
 import com.raxors.photobooth.ui.screens.camera.components.CameraPreview
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.util.concurrent.Executors
 
 @Composable
@@ -70,6 +72,7 @@ fun CameraScreen(
             cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
         }
     }
+    val previewView: PreviewView = remember { PreviewView(context). apply { setController(controller) } }
     if (state.showSheet) {
         controller.bindToLifecycle(lifecycleOwner)
         SendImageBottomSheet(
@@ -103,7 +106,7 @@ fun CameraScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CameraPreview(
-            controller = controller,
+            previewView = previewView,
             modifier = Modifier
                 .size(300.dp)
                 .clip(RoundedCornerShape(16.dp))
@@ -136,7 +139,8 @@ fun CameraScreen(
                             override fun onError(exception: ImageCaptureException) {
                                 super.onError(exception)
                             }
-                        })
+                        }
+                    )
                 },
                 modifier = Modifier
                     .size(64.dp)

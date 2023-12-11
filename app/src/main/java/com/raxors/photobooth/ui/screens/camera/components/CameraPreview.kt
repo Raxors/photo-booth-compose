@@ -10,14 +10,12 @@ import androidx.compose.ui.viewinterop.AndroidView
 
 @Composable
 fun CameraPreview(
-    controller: LifecycleCameraController,
+    previewView: PreviewView,
     modifier: Modifier = Modifier
 ) {
     AndroidView(
         factory = {
-            PreviewView(it).apply {
-                this.controller = controller
-            }
+            previewView
         },
         modifier = modifier.clipToBounds()
     )
