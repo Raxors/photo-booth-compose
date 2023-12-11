@@ -23,6 +23,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.raxors.photobooth.BuildConfig
 import com.raxors.photobooth.core.navigation.CommonScreen
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
 fun HistoryScreen(
@@ -30,7 +31,7 @@ fun HistoryScreen(
     viewModel: HistoryViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
-    val images = viewModel.images.collectAsLazyPagingItems()
+    val images = viewModel.getImagesStateFlow().collectAsLazyPagingItems()
     val refreshState = rememberSwipeRefreshState(isRefreshing = state.isLoading)
     SwipeRefresh(
         state = refreshState,

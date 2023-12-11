@@ -21,8 +21,8 @@ class HistoryViewModel @Inject constructor(
     private val repo: AppRepository
 ): BaseViewModel<HistoryUiState, HistoryUiEvent>() {
 
-    private val _images = MutableStateFlow<PagingData<Image>>(PagingData.empty())
-    val images: StateFlow<PagingData<Image>> = _images.asStateFlow()
+//    private val _images = MutableStateFlow<PagingData<Image>>(PagingData.empty())
+//    val images: StateFlow<PagingData<Image>> = _images.asStateFlow()
 
     init {
         getHistory()
@@ -32,12 +32,14 @@ class HistoryViewModel @Inject constructor(
     fun getHistory() {
         launch({
             repo.getAllImages().flow.cachedIn(viewModelScope).collectLatest { data ->
-               setState { copy(isLoading = false) }
-                _images.value = data
+               setState { copy(isLoading = false, imageList = data) }
             }
         }, onError = {
             it.printStackTrace()
         })
     }
+
+    fun getImagesStateFlow(): StateFlow<PagingData<Image>> =
+        MutableStateFlow(state.value.imageList)
 
 }
