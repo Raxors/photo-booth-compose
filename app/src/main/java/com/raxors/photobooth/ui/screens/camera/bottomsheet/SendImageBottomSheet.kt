@@ -49,7 +49,7 @@ fun SendImageBottomSheet(
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val state by viewModel.state.collectAsState()
-    val friends = viewModel.friendList.collectAsLazyPagingItems()
+    val friends = viewModel.getFriendListStateFlow().collectAsLazyPagingItems()
     if (state.isPhotoSent) {
         LaunchedEffect(state) {
             modalBottomSheetState.hide()

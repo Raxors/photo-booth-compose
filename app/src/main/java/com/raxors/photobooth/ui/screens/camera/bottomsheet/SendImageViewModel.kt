@@ -25,11 +25,6 @@ class SendImageViewModel @Inject constructor(
     private val repo: AppRepository,
 ) : BaseViewModel<SendImageUiState, SendImageUiEvent>() {
 
-    private val _friendList: MutableStateFlow<PagingData<User>> =
-        MutableStateFlow(PagingData.empty())
-    val friendList: StateFlow<PagingData<User>>
-        get() = _friendList.asStateFlow()
-
     override fun initialState(): SendImageUiState = SendImageUiState()
 
     init {
@@ -75,12 +70,15 @@ class SendImageViewModel @Inject constructor(
     private fun getFriends() {
         launch({
             repo.getFriendList().flow.cachedIn(viewModelScope).collectLatest { data ->
-                _friendList.update { data }
+                setState { copy(friendList = data) }
             }
         }, onError = {
             //TODO handle errors
         })
     }
+
+    fun getFriendListStateFlow(): StateFlow<PagingData<User>> =
+        MutableStateFlow(state.value.friendList)
 
     private fun sendImageToFriends(base64Image: String, listIds: List<String>?) {
         launch({

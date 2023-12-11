@@ -6,6 +6,7 @@ import com.raxors.photobooth.domain.models.User
 import kotlinx.coroutines.flow.MutableStateFlow
 
 data class SendImageUiState(
+    val friendList: PagingData<User> = PagingData.empty(),
     val selectedFriends: Set<User> = setOf(),
     val isAllChecked: Boolean = true,
     val isPhotoSent: Boolean = false

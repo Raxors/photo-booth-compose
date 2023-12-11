@@ -1,6 +1,7 @@
 package com.raxors.photobooth.ui.screens.camera.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,7 +34,7 @@ fun AllItemSmall(
     onCLick: () -> Unit
 ) {
     Box(
-        modifier = Modifier.padding(horizontal = 16.dp).clickable { onCLick() },
+        modifier = Modifier.padding(horizontal = 16.dp),
         contentAlignment = Alignment.Center
     ) {
         val color = if (isChecked) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary
@@ -41,6 +42,8 @@ fun AllItemSmall(
             modifier = Modifier
                 .aspectRatio(1f)
                 .border(BorderStroke(2.dp, color), CircleShape)
+                .clip(CircleShape)
+                .clickable { onCLick() }
                 .wrapContentSize(),
             text = "All",
             textAlign = TextAlign.Center,
