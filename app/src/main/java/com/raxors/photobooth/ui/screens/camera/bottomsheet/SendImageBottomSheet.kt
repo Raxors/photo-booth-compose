@@ -1,7 +1,5 @@
 package com.raxors.photobooth.ui.screens.camera.bottomsheet
 
-import android.graphics.Bitmap
-import android.util.Base64
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,9 +33,6 @@ import androidx.paging.compose.itemKey
 import com.raxors.photobooth.R
 import com.raxors.photobooth.ui.screens.camera.components.AllItemSmall
 import com.raxors.photobooth.ui.screens.camera.components.UserItemSmall
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
-import java.io.ByteArrayOutputStream
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

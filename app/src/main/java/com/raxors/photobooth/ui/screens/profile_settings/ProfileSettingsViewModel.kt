@@ -1,18 +1,11 @@
 package com.raxors.photobooth.ui.screens.profile_settings
 
-import android.graphics.Bitmap
-import android.net.Uri
-import android.util.Base64
 import androidx.lifecycle.SavedStateHandle
 import com.raxors.photobooth.core.base.BaseViewModel
-import com.raxors.photobooth.core.utils.Extensions.encodeImage
 import com.raxors.photobooth.core.utils.Security.sha256
-import com.raxors.photobooth.domain.AppRepository
 import com.raxors.photobooth.domain.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.single
-import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 @HiltViewModel

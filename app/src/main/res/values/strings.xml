@@ -15,7 +15,7 @@
     <string name="email">Email</string>
     <string name="send_photo">Send Photo</string>
     <string name="logout">Logout</string>
-    <string name="default_notification_channel_id">photo_booth_push_channel</string>
+    <string name="default_notification_channel_id" translatable="false">photo_booth_push_channel</string>
     <string name="profile_name">Name</string>
     <string name="profile_username">Username</string>
     <string name="profile_edit">Edit profile</string>
@@ -30,4 +30,11 @@
     <string name="new_password">New password</string>
     <string name="remove_friend">Remove friend</string>
     <string name="remove_friend_hint">Do you want to remove your friend?</string>
+    <string name="all">All</string>
+    <string name="add_friend">Add friend</string>
+    <string name="decline">Decline</string>
+    <string name="type_username">Type username</string>
+    <string name="incoming_requests">Incoming Requests</string>
+    <string name="outgoing_requests">Outgoing Requests</string>
+    <string name="friends">Friends</string>
 </resources>

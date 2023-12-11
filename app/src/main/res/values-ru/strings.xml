@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Photo Booth</string>
+    <string name="profile">Профиль</string>
+    <string name="history">История</string>
+    <string name="friend_list">Список друзей</string>
+    <string name="camera">Камера</string>
+    <string name="username">Имя пользователя</string>
+    <string name="password">Пароль</string>
+    <string name="login">Логин</string>
+    <string name="don_t_have_an_account">У вас нет аккаунта?</string>
+    <string name="registration">Регистрация</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="sign_up">Зарегистрироваться</string>
+    <string name="email">Email</string>
+    <string name="send_photo">Отправить фото</string>
+    <string name="logout">Выйти</string>
+    <string name="profile_name">Имя</string>
+    <string name="profile_username">Имя пользователя</string>
+    <string name="profile_edit">Редактировать профиль</string>
+    <string name="edit_name">Изменить имя</string>
+    <string name="edit_username">Изменить имя пользователя</string>
+    <string name="edit_email">Изменить email</string>
+    <string name="edit_password">Изменить пароль</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="cancel">Отменить</string>
+    <string name="settings">Настройки</string>
+    <string name="save">Сохранить</string>
+    <string name="new_password">Новый пароль</string>
+    <string name="remove_friend">Удалить из друзей</string>
+    <string name="remove_friend_hint">Вы действительно хотите удалить друга?</string>
+    <string name="all">Все</string>
+    <string name="add_friend">Добавить в друзья</string>
+    <string name="decline">Отменить</string>
+    <string name="type_username">Введите имя пользователя</string>
+    <string name="incoming_requests">Входящие запросы</string>
+    <string name="outgoing_requests">Исходящие запросы</string>
+    <string name="friends">Друзья</string>
+</resources>

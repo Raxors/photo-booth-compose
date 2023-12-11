@@ -29,7 +29,7 @@ fun BottomBar(
         BottomNavScreen.History,
     )
     AnimatedVisibility(
-        visible = bottomBarState.value ,
+        visible = bottomBarState.value,
         enter = slideInVertically(initialOffsetY = { it }),
         exit = slideOutVertically(targetOffsetY = { it })
     ) {

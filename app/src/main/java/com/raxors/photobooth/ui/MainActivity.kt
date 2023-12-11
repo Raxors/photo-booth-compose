@@ -11,20 +11,26 @@ import androidx.activity.viewModels
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.raxors.photobooth.core.utils.Extensions.observeAsEvent
 import com.raxors.photobooth.ui.screens.auth.login.LoginScreen
 import com.raxors.photobooth.ui.screens.auth.registration.RegistrationScreen
-import com.raxors.photobooth.ui.screens.main.AppScaffold
+import com.raxors.photobooth.ui.screens.main.MainScreen
 import com.raxors.photobooth.ui.screens.splash.SplashScreen
 import com.raxors.photobooth.ui.theme.PhotoBoothTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,12 +48,21 @@ class MainActivity : ComponentActivity() {
         }
         setContent {
             PhotoBoothTheme {
+                StatusBarColor(color = MaterialTheme.colorScheme.surfaceColorAtElevation(5.dp))
                 Surface(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     MainNavigation()
                 }
             }
+        }
+    }
+
+    @Composable
+    fun StatusBarColor(color: Color) {
+        val systemUiController = rememberSystemUiController()
+        SideEffect {
+            systemUiController.setSystemBarsColor(color)
         }
     }
 
@@ -99,7 +114,7 @@ class MainActivity : ComponentActivity() {
             composable(
                 route = Screen.MainScreen.route,
                 content = {
-                    AppScaffold(
+                    MainScreen(
                         context = applicationContext
                     ) {
                         viewModel.logout()

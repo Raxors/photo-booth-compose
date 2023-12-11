@@ -1,17 +1,9 @@
 package com.raxors.photobooth.ui.screens.history_detail
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import com.raxors.photobooth.core.base.BaseViewModel
 import com.raxors.photobooth.domain.AppRepository
-import com.raxors.photobooth.domain.models.Relationship
-import com.raxors.photobooth.domain.models.User
-import com.raxors.photobooth.ui.screens.auth.login.LoginUiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel

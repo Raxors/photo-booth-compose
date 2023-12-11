@@ -1,8 +1,5 @@
 package com.raxors.photobooth.ui.screens.camera.bottomsheet
 
-import android.graphics.Bitmap
-import android.util.Base64
-import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -10,14 +7,10 @@ import com.raxors.photobooth.core.base.BaseViewModel
 import com.raxors.photobooth.core.utils.Extensions.encodeImage
 import com.raxors.photobooth.domain.AppRepository
 import com.raxors.photobooth.domain.models.User
-import com.raxors.photobooth.ui.screens.camera.CameraUiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
-import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 @HiltViewModel

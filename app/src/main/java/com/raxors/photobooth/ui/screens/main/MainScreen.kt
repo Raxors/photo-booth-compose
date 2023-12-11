@@ -1,94 +1,40 @@
 package com.raxors.photobooth.ui.screens.main
 
 import android.content.Context
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import com.raxors.photobooth.core.navigation.BottomNavScreen
-import com.raxors.photobooth.ui.screens.camera.CameraScreen
-import com.raxors.photobooth.ui.screens.friendlist.FriendListScreen
+import androidx.navigation.compose.rememberNavController
+import com.raxors.photobooth.core.navigation.NavigationHost
 
 @Composable
 fun MainScreen(
-    applicationContext: Context,
-    navController: NavHostController
+    context: Context,
+    logout: () -> Unit
 ) {
-    val items = listOf(
-        BottomNavScreen.FriendList,
-        BottomNavScreen.Camera,
-        BottomNavScreen.History,
-    )
+    val navBarNavController = rememberNavController()
+    val bottomBarState = rememberSaveable { mutableStateOf(true) }
     Scaffold(
+        modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            NavigationBar {
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentDestination = navBackStackEntry?.destination
-                items.forEach { screen ->
-                    NavigationBarItem(
-                        icon = { Icon(screen.icon, contentDescription = null) },
-                        label = { Text(stringResource(screen.resourceId)) },
-                        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-                        onClick = {
-                            navController.navigate(screen.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
-                                }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        }
-                    )
-                }
-            }
-        }
+            BottomBar(
+                navHostController = navBarNavController,
+                bottomBarState = bottomBarState
+            )
+        },
     ) { innerPadding ->
-        NavHost(
-            navController,
-            startDestination = BottomNavScreen.Camera.route,
-            Modifier.padding(innerPadding)
+        NavigationHost(
+            context = context,
+            navHostController = navBarNavController,
+            modifier = Modifier.padding(innerPadding),
+            bottomBarState = bottomBarState
         ) {
-            composable(
-                route = BottomNavScreen.FriendList.route,
-                enterTransition = { EnterTransition.None },
-                exitTransition = { ExitTransition.None },
-                popEnterTransition = { EnterTransition.None },
-                popExitTransition = { ExitTransition.None }
-            ) {
-                FriendListScreen(navController)
-            }
-            composable(
-                route = BottomNavScreen.Camera.route,
-                enterTransition = { EnterTransition.None },
-                exitTransition = { ExitTransition.None },
-                popEnterTransition = { EnterTransition.None },
-                popExitTransition = { ExitTransition.None }
-            ) {
-                CameraScreen(navController, applicationContext)
-            }
-            composable(
-                route = BottomNavScreen.History.route,
-                enterTransition = { EnterTransition.None },
-                exitTransition = { ExitTransition.None },
-                popEnterTransition = { EnterTransition.None },
-                popExitTransition = { ExitTransition.None }
-            ) {
-//                ProfileScreen(navController)
-            }
+            logout()
         }
     }
+
 }

@@ -1,7 +1,6 @@
 package com.raxors.photobooth.ui.screens.profile_settings
 
 import com.raxors.photobooth.core.UiState
-import com.raxors.photobooth.domain.models.User
 
 data class ProfileSettingsUiState(
     val username: String = "",

@@ -18,9 +18,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.raxors.photobooth.BuildConfig
+import com.raxors.photobooth.R
 import com.raxors.photobooth.domain.models.User
 
 @Composable
@@ -63,7 +65,7 @@ fun IncomingItem(
                     contentPadding = PaddingValues(horizontal = 16.dp),
                     onClick = { accept(item) },
                 ) {
-                    Text("Add friend")
+                    Text(stringResource(R.string.add_friend))
                 }
                 Spacer(Modifier.size(8.dp))
                 OutlinedButton(
@@ -71,7 +73,7 @@ fun IncomingItem(
                     contentPadding = PaddingValues(horizontal = 16.dp),
                     onClick = { decline(item) }
                 ) {
-                    Text("Decline", style = MaterialTheme.typography.bodyMedium)
+                    Text(stringResource(R.string.decline), style = MaterialTheme.typography.bodyMedium)
                 }
             }
         }

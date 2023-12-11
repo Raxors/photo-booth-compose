@@ -1,6 +1,5 @@
 package com.raxors.photobooth.ui.screens.auth.login
 
-import com.google.firebase.messaging.FirebaseMessaging
 import com.raxors.photobooth.core.base.BaseViewModel
 import com.raxors.photobooth.core.utils.Security.sha256
 import com.raxors.photobooth.domain.AuthRepository

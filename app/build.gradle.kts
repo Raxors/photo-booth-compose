@@ -78,6 +78,7 @@ dependencies {
     implementation(libs.androidx.material.icons.extended)
 
     implementation(libs.accompanist.swiperefresh)
+    implementation(libs.google.accompanist.systemuicontroller)
 
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.4.0"))

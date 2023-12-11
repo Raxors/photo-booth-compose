@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -19,24 +18,25 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.paging.LoadState
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.raxors.photobooth.R
 import com.raxors.photobooth.core.navigation.CommonScreen
-import com.raxors.photobooth.domain.models.User
-import com.raxors.photobooth.ui.screens.friendlist.components.CommonList
 import com.raxors.photobooth.ui.screens.friendlist.components.ExpandableList
 import com.raxors.photobooth.ui.screens.friendlist.components.ExpandableListHeader
 import com.raxors.photobooth.ui.screens.friendlist.components.FriendItem
@@ -58,11 +58,12 @@ fun FriendListScreen(
     val refreshState = rememberSwipeRefreshState(isRefreshing = state.isLoading)
 
     Scaffold(
+        modifier = Modifier.fillMaxSize(),
         topBar = {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.secondaryContainer)
+                    .background(MaterialTheme.colorScheme.surfaceColorAtElevation(5.dp))
                     .padding(bottom = 8.dp),
                 contentAlignment = Alignment.Center
             ) {
@@ -76,7 +77,7 @@ fun FriendListScreen(
                     onSearch = {
                         viewModel.onEvent(FriendListUiEvent.OnSearchTextChanged(it))
                     },
-                    placeholder = { Text("Type username") },
+                    placeholder = { Text(stringResource(R.string.type_username)) },
                     leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                     trailingIcon = {
                         if (state.searchText.isNotBlank()) {
@@ -88,7 +89,8 @@ fun FriendListScreen(
                                 }
                             )
                         }
-                    }
+                    },
+                    tonalElevation = 20.dp
                 ) {
                     LazyColumn(
                         modifier = Modifier.fillMaxSize()
@@ -127,7 +129,7 @@ fun FriendListScreen(
                     Column {
                         if (incoming.itemCount > 0) {
                             ExpandableListHeader(
-                                title = "Incoming Requests",
+                                title = stringResource(R.string.incoming_requests),
                                 isExpanded = state.isIncomingExpanded,
                                 clickExpand = { viewModel.onEvent(FriendListUiEvent.IncomingExpand) }
                             ) { isExpanded ->
@@ -152,7 +154,7 @@ fun FriendListScreen(
                         }
                         if (outgoing.itemCount > 0) {
                             ExpandableListHeader(
-                                title = "Outgoing Requests",
+                                title = stringResource(R.string.outgoing_requests),
                                 isExpanded = state.isOutgoingExpanded,
                                 clickExpand = {
                                     viewModel.onEvent(FriendListUiEvent.OutgoingExpand)
@@ -175,7 +177,7 @@ fun FriendListScreen(
                             }
                         }
                         ExpandableListHeader(
-                            title = "Friends",
+                            title = stringResource(R.string.friends),
                             isExpanded = state.isFriendsExpanded,
                             clickExpand = {
                                 viewModel.onEvent(FriendListUiEvent.FriendsExpand)

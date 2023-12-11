@@ -1,5 +1,6 @@
 [versions]
 accompanist-swiperefresh = "0.33.2-alpha"
+accompanist-systemuicontroller = "0.33.2-alpha"
 agp = "8.2.0"
 camera-core = "1.4.0-alpha02"
 coil-compose = "2.4.0"
@@ -53,6 +54,7 @@ androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", v
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+google-accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist-systemuicontroller" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt-android" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
