@@ -41,6 +41,8 @@ class MainActivity : ComponentActivity() {
     private val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val imageId = intent.getStringExtra("image_id")
+        Log.d("FCM_CLICK_IMAGE_ID", imageId.toString())
         if (!hasRequiredPermissions()) {
             ActivityCompat.requestPermissions(
                 this, APP_PERMISSIONS, 0
@@ -52,7 +54,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    MainNavigation()
+                    MainNavigation(imageId)
                 }
             }
         }
@@ -73,7 +75,7 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    fun MainNavigation() {
+    fun MainNavigation(imageId: String? = null) {
         viewModel.isLogged.observeAsEvent {
             if (it) {
                 FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -115,7 +117,8 @@ class MainActivity : ComponentActivity() {
                 route = Screen.MainScreen.route,
                 content = {
                     MainScreen(
-                        context = applicationContext
+                        context = applicationContext,
+                        imageId = imageId
                     ) {
                         viewModel.logout()
                         navController.navigate(Screen.LoginScreen.route) {

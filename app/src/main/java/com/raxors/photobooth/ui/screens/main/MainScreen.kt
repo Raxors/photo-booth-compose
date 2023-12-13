@@ -14,6 +14,7 @@ import com.raxors.photobooth.core.navigation.NavigationHost
 @Composable
 fun MainScreen(
     context: Context,
+    imageId: String? = null,
     logout: () -> Unit
 ) {
     val navBarNavController = rememberNavController()
@@ -31,7 +32,8 @@ fun MainScreen(
             context = context,
             navHostController = navBarNavController,
             modifier = Modifier.padding(innerPadding),
-            bottomBarState = bottomBarState
+            bottomBarState = bottomBarState,
+            imageId = imageId
         ) {
             logout()
         }

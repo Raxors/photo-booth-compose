@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -23,6 +24,7 @@ fun NavigationHost(
     navHostController: NavHostController,
     modifier: Modifier,
     bottomBarState: MutableState<Boolean>,
+    imageId: String? = null,
     logout: () -> Unit
 ) {
     NavHost(
@@ -110,5 +112,10 @@ fun NavigationHost(
                 HistoryDetailScreen(navHostController)
             }
         )
+    }
+    LaunchedEffect(imageId) {
+        if (imageId != null) {
+            navHostController.navigate(CommonScreen.HistoryDetail(imageId).route)
+        }
     }
 }
