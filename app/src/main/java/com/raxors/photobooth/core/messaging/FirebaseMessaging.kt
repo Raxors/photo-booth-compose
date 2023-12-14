@@ -41,7 +41,7 @@ class FirebaseMessaging: FirebaseMessagingService() {
         if (notification != null) {
             val data = message.data
             val imageUrl = data["image"]
-            val imageId = data["image_id"]
+            val imageId = data["imageId"]
             val clickAction = notification.clickAction
             showNotification(
                 notification.title,
@@ -56,7 +56,7 @@ class FirebaseMessaging: FirebaseMessagingService() {
     private fun showNotification(title: String?, body: String?, imageUrl: String?, imageId: String?, clickAction: String?) {
         // Pass the intent to switch to the MainActivity
         val intent = Intent(clickAction)
-        intent.putExtra("image_id", imageId)
+        intent.putExtra("imageId", imageId)
         val channelId = getString(R.string.default_notification_channel_id)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)

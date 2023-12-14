@@ -41,8 +41,7 @@ class MainActivity : ComponentActivity() {
     private val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val imageId = intent.getStringExtra("image_id")
-        Log.d("FCM_CLICK_IMAGE_ID", imageId.toString())
+        val imageId = intent.getStringExtra("imageId")
         if (!hasRequiredPermissions()) {
             ActivityCompat.requestPermissions(
                 this, APP_PERMISSIONS, 0

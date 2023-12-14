@@ -93,6 +93,6 @@ interface PhotoBoothApi {
     @GET("image/{imageId}/info")
     suspend fun getImageInfo(@Path("imageId") imageId: String): ImageResponse
 
-    @POST("fcm/token")
+    @POST("notification/fcm/token")
     suspend fun sendFcmToken(@Body fcmTokenRequest: SendFcmTokenRequest)
 }
